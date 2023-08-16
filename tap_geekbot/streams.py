@@ -24,8 +24,8 @@ question = th.ObjectType(
     th.Property("hasAnswers", th.BooleanType),
     th.Property("is_random", th.BooleanType),
     th.Property("random_texts", th.ArrayType(th.StringType)),
-    th.Property("prefilled_by", th.StringType),
-    th.Property("text_id", th.StringType),
+    th.Property("prefilled_by", th.IntegerType),
+    th.Property("text_id", th.IntegerType),
     th.Property("preconditions", th.ArrayType(th.StringType)),
     th.Property("label", th.StringType),
 )
