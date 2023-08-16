@@ -1,0 +1,23 @@
+# Changes here will be overwritten by Copier
+_commit: 0.0.30
+_src_path: gh:edgarrmondragon/singer-tap-copier-template
+author_email: edgarrm358@gmail.com
+author_fullname: Edgar Ramírez-Mondragón
+author_username: edgarrmondragon
+dependabot_update_time: '10:00'
+dependabot_update_timezone: UTC
+python_main_version: '3.11'
+repository_name: tap-geekbot
+repository_namespace: edgarrmondragon
+repository_provider: github.com
+repository_visibility: private
+tap_auth_method: API Key
+tap_id: tap-geekbot
+tap_package_command_line_name: tap-geekbot
+tap_package_distribution_name: tap-geekbot
+tap_package_import_name: tap_geekbot
+tap_source_description: Run standup meetings in Slack & Teams
+tap_source_id: Geekbot
+tap_source_name: Geekbot
+tap_stream_type: REST
+vscode_files: true
