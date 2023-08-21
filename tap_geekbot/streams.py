@@ -47,7 +47,29 @@ class Reports(GeekbotStream):
     name = "reports"
     path = "/v1/reports"
 
-    schema = th.PropertiesList().to_dict()
+    schema = th.PropertiesList(
+        th.Property("id", th.IntegerType),
+        th.Property("slack_ts", th.StringType),
+        th.Property("standup_id", th.IntegerType),
+        th.Property("timestamp", th.IntegerType),
+        th.Property("channel", th.StringType),
+        th.Property("is_anonymous", th.BooleanType),
+        th.Property("is_confidential", th.BooleanType),
+        th.Property("members", th.ArrayType(user)),
+        th.Property(
+            "questions",
+            th.ArrayType(
+                th.ObjectType(
+                    th.Property("id", th.IntegerType),
+                    th.Property("question", th.StringType),
+                    th.Property("question_id", th.IntegerType),
+                    th.Property("color", th.StringType),
+                    th.Property("answer", th.StringType),
+                    th.Property("images", th.ArrayType(th.StringType)),
+                ),
+            ),
+        ),
+    ).to_dict()
 
 
 class StandUps(GeekbotStream):
@@ -58,6 +80,7 @@ class StandUps(GeekbotStream):
 
     schema = th.PropertiesList(
         th.Property("id", th.IntegerType),
+        th.Property("name", th.StringType),
         th.Property("time", th.TimeType),
         th.Property(
             "wait_time",
