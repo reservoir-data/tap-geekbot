@@ -1,3 +1,9 @@
+ci:
+  autofix_prs: true
+  autofix_commit_msg: "[pre-commit.ci] auto fixes"
+  autoupdate_schedule: monthly
+  autoupdate_commit_msg: "ci(deps-dev): pre-commit autoupdate"
+
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
@@ -10,12 +16,12 @@ repos:
       - id: trailing-whitespace
 
   - repo: https://github.com/tox-dev/pyproject-fmt
-    rev: "0.13.1"
+    rev: "1.1.0"
     hooks:
       - id: pyproject-fmt
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: "v0.0.284"
+    rev: "v0.0.287"
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix, --show-fixes]
@@ -26,7 +32,7 @@ repos:
       - id: black
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.5.0
+    rev: v1.5.1
     hooks:
       - id: mypy
         pass_filenames: true
