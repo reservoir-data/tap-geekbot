@@ -33,7 +33,7 @@ jobs:
       SETUPTOOLS_USE_DISTUTILS: stdlib
     strategy:
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
 
     steps:
     - name: Checkout code
@@ -67,21 +67,3 @@ jobs:
         TAP_GEEKBOT_START_DATE: ${{ secrets.TAP_GEEKBOT_START_DATE }}
       run: |
         nox
-
-  pre-commit:
-    runs-on: ubuntu-latest
-    env:
-      FORCE_COLOR: "1"
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3.6.0
-
-    - name: Set up Python
-      uses: actions/setup-python@v4.7.0
-      with:
-        python-version: "3.11"
-
-    - uses: pre-commit/action@v3.0.0
-
-    - uses: pre-commit-ci/lite-action@v1.0.1
-      if: always()
