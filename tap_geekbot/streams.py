@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import typing as t
+
 from singer_sdk import typing as th
 
 from tap_geekbot.client import GeekbotStream
@@ -70,6 +72,16 @@ class Reports(GeekbotStream):
             ),
         ),
     ).to_dict()
+
+    def get_url_params(
+        self,
+        context: dict | None,
+        next_page_token: t.Any | None,  # noqa: ANN401
+    ) -> dict[str, t.Any]:
+        """Return the URL params for the request."""
+        params = super().get_url_params(context, next_page_token)
+        params["limit"] = 100
+        return params
 
 
 class StandUps(GeekbotStream):
