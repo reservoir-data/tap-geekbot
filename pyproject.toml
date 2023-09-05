@@ -7,7 +7,7 @@ requires = [
 
 [tool.poetry]
 name = "tap-geekbot"
-version = "0.0.1"
+version = "0.0.0"
 description = "`tap-geekbot` is a Singer tap for Geekbot, built with the Meltano SDK for Singer Taps."
 authors = ["Edgar Ramírez-Mondragón <edgarrm358@gmail.com>"]
 keywords = [
@@ -41,7 +41,7 @@ ignore = [
 line-length = 88
 select = ["ALL"]
 src = ["tap_geekbot", "tests"]
-target-version = "py37"
+target-version = "py38"
 unfixable = [
   "ERA001",  # commented-out-code
 ]
