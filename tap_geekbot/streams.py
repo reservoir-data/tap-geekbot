@@ -71,8 +71,8 @@ class Reports(GeekbotStream):
                         "images",
                         th.ArrayType(
                             th.ObjectType(
-                               th.Property("title", th.StringType),
-                               th.Property("image_url", th.URIType),
+                                th.Property("title", th.StringType),
+                                th.Property("image_url", th.URIType),
                             ),
                         ),
                     ),
