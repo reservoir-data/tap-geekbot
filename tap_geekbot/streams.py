@@ -67,7 +67,15 @@ class Reports(GeekbotStream):
                     th.Property("question_id", th.IntegerType),
                     th.Property("color", th.StringType),
                     th.Property("answer", th.StringType),
-                    th.Property("images", th.ArrayType(th.StringType)),
+                    th.Property(
+                        "images",
+                        th.ArrayType(
+                            th.ObjectType(
+                                th.Property("title", th.StringType),
+                                th.Property("image_url", th.URIType),
+                            ),
+                        ),
+                    ),
                 ),
             ),
         ),
