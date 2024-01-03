@@ -1,8 +1,27 @@
+<div align="center">
+
 # `tap-geekbot`
+
+<div>
+  <a href="https://results.pre-commit.ci/latest/github/edgarrmondragon/tap-betterstack/main">
+    <img alt="pre-commit.ci status" src="https://results.pre-commit.ci/badge/github/edgarrmondragon/tap-betterstack/main.svg"/>
+  </a>
+  <a href="https://github.com/edgarrmondragon/tap-betterstack/blob/main/LICENSE">
+    <img alt="License" src="https://img.shields.io/github/license/edgarrmondragon/tap-betterstack"/>
+  </a>
+  <a href="https://github.com/astral-sh/ruff">
+    <img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v2.json" alt="Ruff" style="max-width:100%;">
+  </a>
+  <a href="https://pypi.org/p/tap-geekbot/">
+    <img alt="Python versions" src="https://img.shields.io/pypi/pyversions/tap-geekbot"/>
+  </a>
+</div>
 
 Singer tap for Geekbot.
 
 Built with the [Meltano Tap SDK](https://sdk.meltano.com) for Singer Taps.
+
+</div>
 
 ## Capabilities
 
