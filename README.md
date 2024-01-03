@@ -17,7 +17,7 @@
   </a>
 </div>
 
-Singer tap for Geekbot.
+Singer tap for [Geekbot](https://geekbot.com/).
 
 Built with the [Meltano Tap SDK](https://sdk.meltano.com) for Singer Taps.
 
