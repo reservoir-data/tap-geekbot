@@ -68,7 +68,7 @@ jobs:
 
     - name: Install Nox
       run: |
-        pipx install nox
+        pipx install 'nox[uv]'
         pipx inject nox nox-poetry
         nox --version
 
