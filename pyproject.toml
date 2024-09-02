@@ -19,6 +19,7 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
 ]
 keywords = [
   "ELT",
@@ -100,13 +101,13 @@ lint.isort.required-imports = [
 lint.pydocstyle.convention = "google"
 
 [tool.pyproject-fmt]
-max_supported_python = "3.13"
+max_supported_python = "3.14"
 
 [tool.pytest.ini_options]
 addopts = "-vvv"
 
 [tool.mypy]
-python_version = "3.10"
+python_version = "3.12"
 warn_redundant_casts = true
 warn_unused_configs = true
 warn_unused_ignores = true
