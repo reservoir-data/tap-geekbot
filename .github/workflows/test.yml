@@ -21,6 +21,10 @@ on:
     - pyproject.toml
     - .github/workflows/test.yml
     - .github/workflows/constraints.txt
+  workflow_dispatch:
+  schedule:
+  # Run weekly on Monday at 12:00 PM UTC
+  - cron: "0 12 * * 1"
 
 env:
   FORCE_COLOR: "1"
@@ -29,7 +33,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      FORCE_COLOR: "1"
       NOXPYTHON: ${{ matrix.python-version }}
       NOXSESSION: tests
       PIP_CONSTRAINT: ${{ github.workspace }}/.github/workflows/constraints.txt
