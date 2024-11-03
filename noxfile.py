@@ -24,7 +24,6 @@ python_versions = [
     "3.11",
     "3.10",
     "3.9",
-    "3.8",
 ]
 nox.options.sessions = ("tests",)
 nox.needs_version = ">=2024.4.15"
