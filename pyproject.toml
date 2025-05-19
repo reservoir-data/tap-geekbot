@@ -28,7 +28,7 @@ classifiers = [
   "Programming Language :: Python :: 3.14",
 ]
 dynamic = [ "version" ]
-dependencies = [ "singer-sdk~=0.45.3" ]
+dependencies = [ "singer-sdk~=0.46.0" ]
 
 urls.Documentation = "https://github.com/edgarrmondragon/tap-geekbot#readme"
 urls.Homepage = "https://github.com/edgarrmondragon/tap-geekbot"
@@ -46,7 +46,7 @@ poetry-plugin-export = ">=1.8"
 [tool.poetry.group.dev.dependencies]
 mypy = ">=1.8.0"
 pytest = "~=8.0"
-singer-sdk = { version = "~=0.45.3", extras = [
+singer-sdk = { version = "~=0.46.0", extras = [
   "testing",
 ] }
 
