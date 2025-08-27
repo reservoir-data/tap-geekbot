@@ -10,7 +10,7 @@ on:
     - poetry.lock
     - pyproject.toml
     - .github/workflows/test.yml
-    - .github/workflows/constraints.txt
+    - .github/workflows/requirements.txt
   pull_request:
     types: [opened, synchronize, reopened]
     paths:
@@ -20,7 +20,7 @@ on:
     - poetry.lock
     - pyproject.toml
     - .github/workflows/test.yml
-    - .github/workflows/constraints.txt
+    - .github/workflows/requirements.txt
   workflow_dispatch:
   schedule:
   # Run weekly on Monday at 12:00 PM UTC
@@ -35,7 +35,7 @@ jobs:
     env:
       NOXFORCEPYTHON: ${{ matrix.python-version }}
       NOXSESSION: tests
-      PIP_CONSTRAINT: ${{ github.workspace }}/.github/workflows/constraints.txt
+      PIP_CONSTRAINT: ${{ github.workspace }}/.github/workflows/requirements.txt
       PYO3_USE_ABI3_FORWARD_COMPATIBILITY: "1"
     strategy:
       fail-fast: false
