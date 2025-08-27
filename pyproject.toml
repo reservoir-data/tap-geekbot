@@ -29,9 +29,9 @@ classifiers = [
 dynamic = [ "version" ]
 dependencies = [ "singer-sdk~=0.48.0" ]
 
-urls.Documentation = "https://github.com/edgarrmondragon/tap-geekbot#readme"
-urls.Homepage = "https://github.com/edgarrmondragon/tap-geekbot"
-urls.Repository = "https://github.com/edgarrmondragon/tap-geekbot"
+urls.Documentation = "https://github.com/reservoir-data/tap-geekbot#readme"
+urls.Homepage = "https://github.com/reservoir-data/tap-geekbot"
+urls.Repository = "https://github.com/reservoir-data/tap-geekbot"
 scripts.tap-geekbot = "tap_geekbot.tap:TapGeekbot.cli"
 
 [tool.poetry]
