@@ -23,11 +23,6 @@ class GeekbotStream(RESTStream):
     @property
     @override
     def authenticator(self) -> APIKeyAuthenticator:
-        """Get an authenticator object.
-
-        Returns:
-            The authenticator instance for this REST stream.
-        """
         return APIKeyAuthenticator(
             key="Authorization",
             value=self.config["api_key"],

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import sys
+from datetime import datetime, timezone
 from typing import TYPE_CHECKING, Any
 
 from singer_sdk import typing as th
@@ -15,7 +16,7 @@ else:
     from typing_extensions import override
 
 if TYPE_CHECKING:
-    from singer_sdk.helpers.types import Context
+    from singer_sdk.helpers.types import Context, Record
 
 user = th.ObjectType(
     th.Property("id", th.StringType),
@@ -58,12 +59,14 @@ class Reports(GeekbotStream):
 
     name = "reports"
     path = "/v1/reports"
+    replication_key = "_sdc_timestamp"
 
     schema = th.PropertiesList(
         th.Property("id", th.IntegerType),
         th.Property("slack_ts", th.StringType),
         th.Property("standup_id", th.IntegerType),
         th.Property("timestamp", th.IntegerType),
+        th.Property("_sdc_timestamp", th.DateTimeType),
         th.Property("channel", th.StringType),
         th.Property("is_anonymous", th.BooleanType),
         th.Property("is_confidential", th.BooleanType),
@@ -92,15 +95,19 @@ class Reports(GeekbotStream):
     ).to_dict()
 
     @override
-    def get_url_params(
-        self,
-        context: Context | None,
-        next_page_token: Any | None,
-    ) -> dict[str, Any]:
-        """Return the URL params for the request."""
+    def get_url_params(self, context: Context | None, next_page_token: Any | None) -> dict[str, Any]:
         params: dict[str, Any] = super().get_url_params(context, next_page_token)  # type: ignore[assignment]
         params["limit"] = 100
+
+        if start_time := self.get_starting_timestamp(context):
+            params["after"] = start_time.timestamp()
+
         return params
+
+    @override
+    def post_process(self, row: Record, context: Context | None = None) -> Record | None:
+        row["_sdc_timestamp"] = datetime.fromtimestamp(row["timestamp"], tz=timezone.utc)
+        return row
 
 
 class StandUps(GeekbotStream):
@@ -117,8 +124,7 @@ class StandUps(GeekbotStream):
             "wait_time",
             th.NumberType,
             description=(
-                "Minutes to wait after user logs in before asking question. "
-                "Null value means no automated asking."
+                "Minutes to wait after user logs in before asking question. Null value means no automated asking."
             ),
         ),
         th.Property("timezone", th.StringType),

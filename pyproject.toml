@@ -71,7 +71,7 @@ style = "pep440"
 vcs = "git"
 
 [tool.ruff]
-line-length = 88
+line-length = 120
 src = [
   "tap_geekbot",
   "tests",

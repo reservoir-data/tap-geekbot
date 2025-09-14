@@ -36,11 +36,6 @@ class TapGeekbot(Tap):
 
     @override
     def discover_streams(self) -> list[Stream]:
-        """Return a list of discovered streams.
-
-        Returns:
-            A list of Geekbot streams.
-        """
         return [
             Teams(tap=self),
             Reports(tap=self),
