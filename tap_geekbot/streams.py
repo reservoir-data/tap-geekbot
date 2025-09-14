@@ -49,9 +49,13 @@ class Teams(GeekbotStream):
 
     name = "teams"
     path = "/v1/teams"
-    records_jsonpath = "$.users[*]"
+    records_jsonpath = "$"
 
-    schema = user.to_dict()
+    schema = th.PropertiesList(
+        th.Property("id", th.IntegerType),
+        th.Property("name", th.StringType),
+        th.Property("users", th.ArrayType(user)),
+    ).to_dict()
 
 
 class Reports(GeekbotStream):
