@@ -2,16 +2,26 @@
 
 from __future__ import annotations
 
-import typing as t
+import sys
+from typing import TYPE_CHECKING, Any
 
 from singer_sdk import typing as th
 
 from tap_geekbot.client import GeekbotStream
 
+if sys.version_info >= (3, 12):
+    from typing import override
+else:
+    from typing_extensions import override
+
+if TYPE_CHECKING:
+    from singer_sdk.helpers.types import Context
+
 user = th.ObjectType(
     th.Property("id", th.StringType),
     th.Property("email", th.EmailType),
     th.Property("username", th.StringType),
+    th.Property("role", th.StringType),
     th.Property("realname", th.StringType),
     th.Property("profile_img", th.StringType),
 )
@@ -81,13 +91,14 @@ class Reports(GeekbotStream):
         ),
     ).to_dict()
 
+    @override
     def get_url_params(
         self,
-        context: dict | None,
-        next_page_token: t.Any | None,  # noqa: ANN401
-    ) -> dict[str, t.Any]:
+        context: Context | None,
+        next_page_token: Any | None,
+    ) -> dict[str, Any]:
         """Return the URL params for the request."""
-        params = super().get_url_params(context, next_page_token)
+        params: dict[str, Any] = super().get_url_params(context, next_page_token)  # type: ignore[assignment]
         params["limit"] = 100
         return params
 
