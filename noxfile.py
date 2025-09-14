@@ -17,19 +17,19 @@ except ImportError:
     {sys.executable} -m pip install nox-poetry"""
     raise SystemExit(dedent(message)) from None
 
-python_versions = [
-    "3.14",
-    "3.13",
-    "3.12",
-    "3.11",
-    "3.10",
-]
+PYPROJECT = nox.project.load_toml("pyproject.toml")
+PYTHON_VERSIONS = nox.project.python_versions(PYPROJECT)
+
 nox.options.sessions = ("tests",)
-nox.needs_version = ">=2024.4.15"
+nox.needs_version = ">=2024.5.1"
 nox.options.default_venv_backend = "uv|virtualenv"
+nox.options.sessions = (
+    f"tests-{PYTHON_VERSIONS[-1]}",
+    "typing",
+)
 
 
-@session(python=python_versions)
+@session(python=PYTHON_VERSIONS)
 def tests(session: Session) -> None:
     """Execute pytest tests."""
     deps = ["pytest", "pytest-durations"]
@@ -39,3 +39,12 @@ def tests(session: Session) -> None:
     session.install(".")
     session.install(*deps)
     session.run("pytest", *session.posargs)
+
+
+@session
+def typing(session: Session) -> None:
+    """Type checks."""
+    session.install(".")
+    session.install("mypy", "ty")
+    session.run("mypy", "tap_geekbot", "tests")
+    session.run("ty", "check", "tap_geekbot", "tests")

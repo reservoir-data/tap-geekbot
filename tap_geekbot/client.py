@@ -2,10 +2,15 @@
 
 from __future__ import annotations
 
-import typing as t
+import sys
 
 from singer_sdk import RESTStream
 from singer_sdk.authenticators import APIKeyAuthenticator
+
+if sys.version_info >= (3, 12):
+    from typing import override
+else:
+    from typing_extensions import override
 
 
 class GeekbotStream(RESTStream):
@@ -13,44 +18,18 @@ class GeekbotStream(RESTStream):
 
     url_base = "https://api.geekbot.com"
     records_jsonpath = "$[*]"
-    primary_keys: t.ClassVar[list[str]] = ["id"]
+    primary_keys = ("id",)
 
     @property
+    @override
     def authenticator(self) -> APIKeyAuthenticator:
         """Get an authenticator object.
 
         Returns:
             The authenticator instance for this REST stream.
         """
-        return APIKeyAuthenticator.create_for_stream(
-            self,
+        return APIKeyAuthenticator(
             key="Authorization",
             value=self.config["api_key"],
             location="header",
         )
-
-    @property
-    def http_headers(self) -> dict:
-        """Return the http headers needed.
-
-        Returns:
-            A dictionary of HTTP headers.
-        """
-        return {"User-Agent": f"{self.tap_name}/{self._tap.plugin_version}"}
-
-    def get_url_params(
-        self,
-        context: dict | None,  # noqa: ARG002
-        next_page_token: t.Any | None,  # noqa: ARG002, ANN401
-    ) -> dict[str, t.Any]:
-        """Get URL query parameters.
-
-        Args:
-            context: Stream sync context.
-            next_page_token: Next offset.
-
-        Returns:
-            Mapping of URL query parameters.
-        """
-        params: dict = {}
-        return params
