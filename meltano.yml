@@ -12,7 +12,6 @@ plugins:
     description: Run standup meetings in Slack & Teams
     repository: https://github.com/reservoir-data/tap-geekbot
     docs: https://github.com/reservoir-data/tap-geekbot#readme
-    pip_url: -e .
     capabilities:
     - state
     - catalog
