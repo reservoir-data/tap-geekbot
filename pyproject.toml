@@ -19,7 +19,7 @@ license-files = [
   "LICENSE",
 ]
 authors = [ { name = "Edgar Ramírez-Mondragón", email = "edgarrm358@gmail.com" } ]
-requires-python = ">=3.10,<4"
+requires-python = ">=3.10"
 classifiers = [
   "License :: OSI Approved :: Apache Software License",
   "Programming Language :: Python :: 3 :: Only",
@@ -40,6 +40,13 @@ urls.Homepage = "https://github.com/reservoir-data/tap-geekbot"
 urls.Repository = "https://github.com/reservoir-data/tap-geekbot"
 scripts.tap-geekbot = "tap_geekbot.tap:TapGeekbot.cli"
 
+[dependency-groups]
+dev = [
+  "mypy>=1.8.0",
+  "pytest~=8.0",
+  "singer-sdk[testing]",
+]
+
 [tool.poetry]
 requires-poetry = ">=2.2"
 version = "0.0.0"
@@ -47,13 +54,6 @@ version = "0.0.0"
 [tool.poetry.requires-plugins]
 poetry-dynamic-versioning = { version = ">=1.0.0,<2.0.0", extras = [ "plugin" ] }
 poetry-plugin-export = ">=1.8"
-
-[tool.poetry.group.dev.dependencies]
-mypy = ">=1.8.0"
-pytest = "~=8.0"
-singer-sdk = { version = "*", extras = [
-  "testing",
-] }
 
 [tool.poetry-dynamic-versioning]
 enable = true
