@@ -43,7 +43,7 @@ scripts.tap-geekbot = "tap_geekbot.tap:TapGeekbot.cli"
 [dependency-groups]
 dev = [
   "mypy>=1.8.0",
-  "pytest~=8.0",
+  "pytest~=9.0",
   "singer-sdk[testing]",
 ]
 
