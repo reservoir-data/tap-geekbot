@@ -2,18 +2,12 @@
 
 from __future__ import annotations
 
-import sys
-from datetime import datetime, timezone
-from typing import TYPE_CHECKING, Any
+from datetime import UTC, datetime
+from typing import TYPE_CHECKING, Any, override
 
 from singer_sdk import typing as th
 
 from tap_geekbot.client import GeekbotStream
-
-if sys.version_info >= (3, 12):
-    from typing import override
-else:
-    from typing_extensions import override
 
 if TYPE_CHECKING:
     from singer_sdk.helpers.types import Context, Record
@@ -110,7 +104,7 @@ class Reports(GeekbotStream):
 
     @override
     def post_process(self, row: Record, context: Context | None = None) -> Record | None:
-        row["_sdc_timestamp"] = datetime.fromtimestamp(row["timestamp"], tz=timezone.utc)
+        row["_sdc_timestamp"] = datetime.fromtimestamp(row["timestamp"], tz=UTC)
         return row
 
 
