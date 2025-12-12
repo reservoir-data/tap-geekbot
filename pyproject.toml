@@ -19,12 +19,10 @@ license-files = [
   "LICENSE",
 ]
 authors = [ { name = "Edgar Ramírez-Mondragón", email = "edgarrm358@gmail.com" } ]
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 classifiers = [
   "License :: OSI Approved :: Apache Software License",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
@@ -32,7 +30,6 @@ classifiers = [
 dynamic = [ "version" ]
 dependencies = [
   "singer-sdk~=0.53.2",
-  "typing-extensions>=4.15,<5; python_version<'3.12'",
 ]
 
 urls.Documentation = "https://github.com/reservoir-data/tap-geekbot#readme"
@@ -42,7 +39,7 @@ scripts.tap-geekbot = "tap_geekbot.tap:TapGeekbot.cli"
 
 [dependency-groups]
 dev = [
-  "mypy>=1.8.0",
+  "mypy>=1.8",
   "pytest~=9.0",
   "singer-sdk[testing]",
 ]
