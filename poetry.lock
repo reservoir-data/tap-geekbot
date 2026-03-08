@@ -1060,14 +1060,14 @@ files = [
 
 [[package]]
 name = "singer-sdk"
-version = "0.53.5"
+version = "0.54.0a4"
 description = "A framework for building Singer taps and targets"
 optional = false
 python-versions = ">=3.10"
 groups = ["main", "dev"]
 files = [
-    {file = "singer_sdk-0.53.5-py3-none-any.whl", hash = "sha256:8224fce7ec6b131e2827627f9fcd20fb16b4dc31b17cd1d4f22676e55c62341f"},
-    {file = "singer_sdk-0.53.5.tar.gz", hash = "sha256:da58ced888e2724323ab27a2873bc83072edbf7ee2d8e24542345a0830e32609"},
+    {file = "singer_sdk-0.54.0a4-py3-none-any.whl", hash = "sha256:bc0caf3825f3c1d2899197f0677ac00cd736ee64b8238e164b8ba21f4c4a14d0"},
+    {file = "singer_sdk-0.54.0a4.tar.gz", hash = "sha256:bc0784a5b5ea8d178775a3108d69cffc53c12aa6d5fd0db02ceea960358bb443"},
 ]
 
 [package.dependencies]
@@ -1089,6 +1089,7 @@ simplejson = ">=3.17.6"
 sqlalchemy = ">=2"
 typing-extensions = {version = ">=4.5.0", markers = "python_version < \"3.13\""}
 universal-pathlib = ">=0.2.6"
+urllib3 = ">=1.26.20"
 
 [package.extras]
 faker = ["faker (>=22.5)"]
@@ -1257,4 +1258,4 @@ zstd = ["backports-zstd (>=1.0.0) ; python_version < \"3.14\""]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12"
-content-hash = "5a9a93c3868263d61848db71505549f3deaa8879902c2ebe08b31337e0023ad1"
+content-hash = "42e9f983d677708fd55241b5d14d5c2ff1ae83378b7ca41b43f94bfd8b594467"
