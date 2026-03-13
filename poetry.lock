@@ -1060,14 +1060,14 @@ files = [
 
 [[package]]
 name = "singer-sdk"
-version = "0.54.0a6"
+version = "0.54.0a7"
 description = "A framework for building Singer taps and targets"
 optional = false
 python-versions = ">=3.10"
 groups = ["main", "dev"]
 files = [
-    {file = "singer_sdk-0.54.0a6-py3-none-any.whl", hash = "sha256:6cc20a11b348ee349cb1798b68cceae20008476d57b0387ea35576873db258fb"},
-    {file = "singer_sdk-0.54.0a6.tar.gz", hash = "sha256:0cb5e371e883f4cc88f1a31628eb72045c3fc790530e430ccc6d45577f25dbae"},
+    {file = "singer_sdk-0.54.0a7-py3-none-any.whl", hash = "sha256:98d3820495ef1f23c4995c6002038c60a34d5839c6475f4ee34eb598ecfc2769"},
+    {file = "singer_sdk-0.54.0a7.tar.gz", hash = "sha256:5dd0a591dc334db02c19226fbd2a713ed63b2ec899144dcc9a80c3842fbde271"},
 ]
 
 [package.dependencies]
@@ -1084,7 +1084,7 @@ python-dotenv = ">=0.20"
 pyyaml = ">=6.0"
 referencing = ">=0.30.0"
 requests = ">=2.25.1"
-simpleeval = ">=0.9.13,<1.0.1 || >1.0.1"
+simpleeval = ">=0.9.13,<1.0.1 || >1.0.1,<1.0.5"
 simplejson = ">=3.17.6"
 sqlalchemy = ">=2"
 typing-extensions = {version = ">=4.5.0", markers = "python_version < \"3.13\""}
