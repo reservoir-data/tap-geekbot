@@ -10,7 +10,7 @@ plugins:
     label: Geekbot
     namespace: geekbot
     description: Run standup meetings in Slack & Teams
-    repository: https://github.com/reservoir-data/tap-geekbot
+    repo: https://github.com/reservoir-data/tap-geekbot
     docs: https://github.com/reservoir-data/tap-geekbot#readme
     capabilities:
     - state

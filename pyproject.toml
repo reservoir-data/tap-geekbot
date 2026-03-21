@@ -1,8 +1,8 @@
 [build-system]
-build-backend = "poetry_dynamic_versioning.backend"
+build-backend = "hatchling.build"
 requires = [
-  "poetry-core",
-  "poetry-dynamic-versioning",
+  "hatch-vcs",
+  "hatchling",
 ]
 
 [project]
@@ -15,57 +15,36 @@ keywords = [
   "singer.io",
 ]
 license = "Apache-2.0"
-license-files = [
-  "LICENSE",
-]
-authors = [ { name = "Edgar Ramírez-Mondragón", email = "edgarrm358@gmail.com" } ]
+license-files = [ "LICENSE" ]
 requires-python = ">=3.12"
 classifiers = [
-  "License :: OSI Approved :: Apache Software License",
   "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
 ]
 dynamic = [ "version" ]
-dependencies = [
-  "singer-sdk~=0.54.0a4",
-]
-
-urls.Documentation = "https://github.com/reservoir-data/tap-geekbot#readme"
-urls.Homepage = "https://github.com/reservoir-data/tap-geekbot"
-urls.Repository = "https://github.com/reservoir-data/tap-geekbot"
-scripts.tap-geekbot = "tap_geekbot.tap:TapGeekbot.cli"
+dependencies = [ "singer-sdk~=0.54.0a4" ]
+[[project.authors]]
+name = "Edgar Ramírez-Mondragón"
+email = "edgarrm358@gmail.com"
+[project.scripts]
+tap-geekbot = "tap_geekbot.tap:TapGeekbot.cli"
+[project.urls]
+Documentation = "https://github.com/reservoir-data/tap-geekbot#readme"
+Homepage = "https://github.com/reservoir-data/tap-geekbot"
+Repository = "https://github.com/reservoir-data/tap-geekbot"
 
 [dependency-groups]
 dev = [
-  "mypy>=1.8",
+  "mypy>=1.19",
   "pytest~=9.0",
   "singer-sdk[testing]",
 ]
 
-[tool.poetry]
-requires-poetry = ">=2.2"
-version = "0.0.0"
-
-[tool.poetry.requires-plugins]
-poetry-dynamic-versioning = { version = ">=1.0.0,<2.0.0", extras = [ "plugin" ] }
-poetry-plugin-export = ">=1.8"
-
-[tool.poetry-dynamic-versioning]
-enable = true
-format-jinja = """
-    {%- if distance == 0 -%}
-        {{ serialize_pep440(base, stage, revision) }}
-    {%- elif revision is not none -%}
-        {{ serialize_pep440(base, stage, revision + 1, dev=distance, metadata=[commit]) }}
-    {%- else -%}
-        {{ serialize_pep440(bump_version(base), stage, revision, dev=distance, metadata=[commit]) }}
-    {%- endif -%}
-"""
-metadata = true
-style = "pep440"
-vcs = "git"
+[tool.hatch.version]
+fallback-version = "0.1.0.dev0"
+source = "vcs"
 
 [tool.ruff]
 line-length = 120
@@ -73,42 +52,53 @@ src = [
   "tap_geekbot",
   "tests",
 ]
-lint.select = [
+[tool.ruff.lint]
+select = [
   "ALL",
 ]
-lint.ignore = [
+ignore = [
   "COM812", # missing-trailing-comma
   "DJ",     # flake8-django
   "FIX002", # line-contains-todo
   "ISC001", # single-line-implicit-string-concatenation
 ]
-lint.per-file-ignores."noxfile.py" = [
+per-file-ignores."noxfile.py" = [
   "ANN",
 ]
-lint.per-file-ignores."tests/*" = [
+per-file-ignores."tests/*" = [
   "ANN201", # missing-return-type-public-function
   "S101",   # assert
   "SLF001", # private-member-access
 ]
-lint.unfixable = [
+unfixable = [
   "ERA001", # commented-out-code
 ]
-lint.flake8-annotations.allow-star-arg-any = true
-lint.isort.known-first-party = [
+flake8-annotations.allow-star-arg-any = true
+isort.known-first-party = [
   "tap_geekbot",
 ]
-lint.isort.required-imports = [
+isort.required-imports = [
   "from __future__ import annotations",
 ]
-lint.pydocstyle.convention = "google"
+pydocstyle.convention = "google"
 
 [tool.pyproject-fmt]
-max_supported_python = "3.14"
+table_format = "long"
 
-[tool.pytest.ini_options]
-addopts = "-vvv"
+[tool.pytest]
+addopts = [ "-v", "-ra" ]
+filterwarnings = [
+  "error",
+  "once:Fields in transformed catalog but not in records:UserWarning",
+]
+log_level = "INFO"
+minversion = "9"
+strict = true
+testpaths = [ "tests" ]
 
 [tool.mypy]
+enable_error_code = [ "ignore-without-code", "redundant-expr", "truthy-bool" ]
+strict = true
 warn_redundant_casts = true
 warn_return_any = true
 warn_unreachable = true
