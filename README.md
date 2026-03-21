@@ -25,11 +25,11 @@ Built with the [Meltano Tap SDK](https://sdk.meltano.com) for Singer Taps.
 
 ## Capabilities
 
-* `catalog`
-* `state`
-* `discover`
-* `about`
-* `stream-maps`
+- `catalog`
+- `state`
+- `discover`
+- `about`
+- `stream-maps`
 
 ## Settings
 
@@ -74,8 +74,7 @@ tap-geekbot --config CONFIG --discover > ./catalog.json
 ### Initialize your Development Environment
 
 ```bash
-pipx install poetry
-poetry install
+uv sync
 ```
 
 ### Create and Run Tests
@@ -83,13 +82,13 @@ poetry install
 Create tests within the `tests` subfolder and then run:
 
 ```bash
-poetry run pytest
+uv run pytest
 ```
 
-You can also test the `tap-geekbot` CLI interface directly using `poetry run`:
+You can also test the `tap-geekbot` CLI interface directly using `uv run`:
 
 ```bash
-poetry run tap-geekbot --help
+uv run tap-geekbot --help
 ```
 
 ### Testing with [Meltano](https://www.meltano.com)
