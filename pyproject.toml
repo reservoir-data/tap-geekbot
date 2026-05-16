@@ -37,14 +37,27 @@ Repository = "https://github.com/reservoir-data/tap-geekbot"
 
 [dependency-groups]
 dev = [
-  "mypy>=1.19",
+  { include-group = "testing" },
+  { include-group = "typing" },
+]
+testing = [
+  "deptry>=0.23",
   "pytest~=9.0",
   "singer-sdk[testing]",
+]
+typing = [
+  "mypy>=1.19",
+  "ty>=0.0.23",
 ]
 
 [tool.hatch.version]
 fallback-version = "0.1.0.dev0"
 source = "vcs"
+
+[tool.uv]
+required-version = ">=0.10"
+prerelease = "allow"
+preview = true
 
 [tool.ruff]
 line-length = 120
@@ -61,9 +74,6 @@ ignore = [
   "DJ",     # flake8-django
   "FIX002", # line-contains-todo
   "ISC001", # single-line-implicit-string-concatenation
-]
-per-file-ignores."noxfile.py" = [
-  "ANN",
 ]
 per-file-ignores."tests/*" = [
   "ANN201", # missing-return-type-public-function
@@ -82,8 +92,21 @@ isort.required-imports = [
 ]
 pydocstyle.convention = "google"
 
+[tool.deptry.package_module_name_map]
+mypy = "mypy"
+ty = "ty"
+
 [tool.pyproject-fmt]
 table_format = "long"
+
+[tool.mypy]
+enable_error_code = [ "ignore-without-code", "redundant-expr", "truthy-bool" ]
+strict = true
+warn_redundant_casts = true
+warn_return_any = true
+warn_unreachable = true
+warn_unused_configs = true
+warn_unused_ignores = true
 
 [tool.pytest]
 addopts = [ "-v", "-ra" ]
@@ -96,11 +119,32 @@ minversion = "9"
 strict = true
 testpaths = [ "tests" ]
 
-[tool.mypy]
-enable_error_code = [ "ignore-without-code", "redundant-expr", "truthy-bool" ]
-strict = true
-warn_redundant_casts = true
-warn_return_any = true
-warn_unreachable = true
-warn_unused_configs = true
-warn_unused_ignores = true
+[tool.tox]
+requires = [ "tox>=4.51", "tox-uv" ]
+env_list = [
+  "dependencies",
+  "typing",
+  "test",
+]
+[tool.tox.env.dependencies]
+description = "check for unused, missing and transitive dependencies"
+dependency_groups = [ "testing" ]
+labels = [ "check" ]
+commands = [ [ "deptry", "." ] ]
+[tool.tox.env.test]
+description = "run tests on Python {py_dot_ver}"
+base_python_file = [ ".python-version" ]
+[tool.tox.env.typing]
+description = "type checks"
+dependency_groups = [ "testing", "typing" ]
+labels = [ "check" ]
+commands = [
+  [ "ty", "check" ],
+  [ "mypy", "tap_geekbot", "tests" ],
+]
+
+[tool.tox.env_run_base]
+runner = "uv-venv-lock-runner"
+pass_env = [ "TAP_GEEKBOT_*" ]
+dependency_groups = [ "testing" ]
+commands = [ [ "pytest", { replace = "posargs", default = [ "tests" ], extend = true } ] ]
