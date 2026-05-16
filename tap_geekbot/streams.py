@@ -94,9 +94,7 @@ class Reports(GeekbotStream):
 
     @override
     def get_url_params(self, context: Context | None, next_page_token: Any | None) -> dict[str, Any]:
-        params: dict[str, Any] = super().get_url_params(context, next_page_token)  # type: ignore[assignment]
-        params["limit"] = 100
-
+        params: dict[str, Any] = {"limit": 100}
         if start_time := self.get_starting_timestamp(context):
             params["after"] = start_time.timestamp()
 

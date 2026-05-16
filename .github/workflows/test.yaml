@@ -6,21 +6,17 @@ on:
     paths:
     - tap_geekbot/**
     - tests/**
-    - noxfile.py
     - pyproject.toml
     - uv.lock
     - .github/workflows/test.yaml
-    - .github/workflows/requirements.txt
   pull_request:
     types: [opened, synchronize, reopened]
     paths:
     - tap_geekbot/**
     - tests/**
-    - noxfile.py
     - pyproject.toml
     - uv.lock
     - .github/workflows/test.yaml
-    - .github/workflows/requirements.txt
   workflow_dispatch:
   schedule:
   # Run weekly on Monday at 12:00 PM UTC
@@ -35,6 +31,12 @@ concurrency:
 
 env:
   FORCE_COLOR: "1"
+  # renovate: datasource=pypi depName=uv
+  UV_VERSION: 0.10.2
+  # renovate: datasource=pypi depName=tox
+  TOX_VERSION: 4.51.0
+  # renovate: datasource=pypi depName=tox-uv
+  TOX_UV_VERSION: 1.29.0
 
 jobs:
   build-package:
@@ -54,10 +56,6 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     needs: build-package
-    env:
-      NOXFORCEPYTHON: ${{ matrix.python-version }}
-      NOXSESSION: tests
-      UV_CONSTRAINT: ${{ github.workspace }}/.github/workflows/requirements.txt
     strategy:
       fail-fast: false
       max-parallel: 2
@@ -65,23 +63,41 @@ jobs:
         python-version: ${{ fromJson(needs.build-package.outputs.supported-python-versions) }}
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-
-    - name: Install uv
-      uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7.6.0
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      with:
+        persist-credentials: false
+    - uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7.6.0
       with:
         python-version: ${{ matrix.python-version }}
         version: ${{ env.UV_VERSION }}
-
-    - name: Install Nox
-      run: |
-        uv tool install nox
-        nox --version
-
-    - name: Run tests
+    - name: Run
       env:
         TAP_GEEKBOT_API_KEY: ${{ secrets.TAP_GEEKBOT_API_KEY }}
         TAP_GEEKBOT_START_DATE: ${{ secrets.TAP_GEEKBOT_START_DATE }}
-      run: |
-        nox --verbose
+        MATRIX_PYTHON_VERSION: ${{ matrix.python-version }}
+      run: >
+        uvx
+        --with tox-uv==${TOX_UV_VERSION}
+        --with tox==${TOX_VERSION}
+        tox -e ${MATRIX_PYTHON_VERSION} -- --junit-xml=junit.xml
+
+  lint:
+    name: Static analysis
+    runs-on: ubuntu-24.04
+    steps:
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      with:
+        persist-credentials: false
+    - uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7.6.0
+      with:
+        version: ${{ env.UV_VERSION }}
+    - run: >
+        uv tool install
+        --managed-python
+        --with tox-uv==${TOX_UV_VERSION}
+        --with tox==${TOX_VERSION}
+        tox
+    - name: Static type checking
+      run: tox -e typing
+    - name: Unused, missing and transitive dependencies
+      run: tox -e dependencies
