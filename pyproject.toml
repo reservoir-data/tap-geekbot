@@ -16,24 +16,24 @@ keywords = [
 ]
 license = "Apache-2.0"
 license-files = [ "LICENSE" ]
-requires-python = ">=3.12"
+requires-python = ">=3.13"
 classifiers = [
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: 3.15",
 ]
 dynamic = [ "version" ]
 dependencies = [ "singer-sdk~=0.55.0a1" ]
 [[project.authors]]
 name = "Edgar Ramírez-Mondragón"
 email = "edgarrm358@gmail.com"
-[project.scripts]
-tap-geekbot = "tap_geekbot.tap:TapGeekbot.cli"
 [project.urls]
 Documentation = "https://github.com/reservoir-data/tap-geekbot#readme"
 Homepage = "https://github.com/reservoir-data/tap-geekbot"
 Repository = "https://github.com/reservoir-data/tap-geekbot"
+[project.scripts]
+tap-geekbot = "tap_geekbot.tap:TapGeekbot.cli"
 
 [dependency-groups]
 dev = [
@@ -51,8 +51,8 @@ typing = [
 ]
 
 [tool.hatch.version]
-fallback-version = "0.1.0.dev0"
 source = "vcs"
+fallback-version = "0.1.0.dev0"
 
 [tool.uv]
 required-version = ">=0.10"
@@ -65,23 +65,25 @@ src = [
   "tap_geekbot",
   "tests",
 ]
+preview = true
 [tool.ruff.lint]
 select = [
   "ALL",
 ]
 ignore = [
-  "COM812", # missing-trailing-comma
-  "DJ",     # flake8-django
-  "FIX002", # line-contains-todo
-  "ISC001", # single-line-implicit-string-concatenation
+  "DJ",
+  "line-contains-todo",
+  "missing-copyright-notice",
+  "missing-trailing-comma",
+  "single-line-implicit-string-concatenation",
 ]
 per-file-ignores."tests/*" = [
-  "ANN201", # missing-return-type-public-function
-  "S101",   # assert
-  "SLF001", # private-member-access
+  "assert",
+  "missing-return-type-undocumented-public-function",
+  "private-member-access",
 ]
 unfixable = [
-  "ERA001", # commented-out-code
+  "commented-out-code",
 ]
 flake8-annotations.allow-star-arg-any = true
 isort.known-first-party = [
@@ -135,7 +137,6 @@ commands = [
   [ "mypy", "tap_geekbot", "tests" ],
 ]
 labels = [ "check" ]
-
 [tool.tox.env_run_base]
 runner = "uv-venv-lock-runner"
 dependency_groups = [ "testing" ]
